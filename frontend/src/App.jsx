@@ -11,6 +11,7 @@ import Navbar from "@/components/common/Navbar.jsx";
 import ResetPassword from "@/components/common/ResetPassword.jsx";
 import OwnerDashboard from "@/pages/owner/OwnerDashboard.jsx";
 import ProtectedRoute from "@/pages/auth/ProtectedRoute.jsx";
+import AllRatings from "@/pages/admin/AllRatings.jsx";
 
 function App() {
 
@@ -63,6 +64,14 @@ function App() {
                   element={
                       <ProtectedRoute role="admin">
                           <ManageStores />
+                      </ProtectedRoute>
+                  }
+              />
+              <Route
+                  path="/admin/ratings"
+                  element={
+                      <ProtectedRoute role="admin">
+                          <AllRatings />
                       </ProtectedRoute>
                   }
               />

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, Store, Star } from "lucide-react";
+import toast from "react-hot-toast";
 
 const AdminDashboard = () => {
     const [stats, setStats] = useState({ totalUsers: 0, totalStores: 0, totalRatings: 0 });
@@ -12,8 +13,11 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
+                const toastId = toast.loading("Loading data..");
                 const data = await getDashboardStats();
                 setStats(data);
+                toast.dismiss(toastId);
+                toast.success("Successfully loaded data.");
             } catch (error) {
                 console.error("Dashboard load failed:", error.message);
             }
@@ -41,6 +45,7 @@ const AdminDashboard = () => {
             title: "Total Ratings",
             value: stats.totalRatings,
             button: "View Ratings",
+            route: "/admin/ratings"
         }
     ];
 
@@ -57,7 +62,7 @@ const AdminDashboard = () => {
                         <CardContent>
                             <p className="text-3xl font-bold">{card.value}</p>
                             <Button
-                                className="mt-4 text-sm w-full"
+                                className="mt-4 text-sm w-full hover:cursor-pointer"
                                 variant="outline"
                                 onClick={() => navigate(card.route)}
                             >

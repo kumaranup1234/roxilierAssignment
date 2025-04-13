@@ -10,7 +10,8 @@ const {
     getSingleUser,
     updateUser,
     deleteUser,
-    getDashboardStats
+    getDashboardStats,
+    getAllRatings
 } = require('../controller/adminController');
 
 const { verifyToken, authorizeRoles } = require('../middleware/authMiddleware');
@@ -36,5 +37,8 @@ router.get('/users', getAllUsers);
 router.get('/users/:id', getSingleUser);
 router.put('/users/:id', updateUser);
 router.delete('/users/:id', deleteUser);
+
+// Ratings
+router.get('/ratings', getAllRatings);
 
 module.exports = router;

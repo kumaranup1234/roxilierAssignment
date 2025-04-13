@@ -124,3 +124,14 @@ export const deleteUser = async (userId) => {
         throw new Error(error.response ? error.response.data.message : 'Error deleting user');
     }
 };
+
+// GetAllRatings
+export const getAllReviews = async () => {
+    try {
+        const response = await axiosInstance.get('/admin/ratings');
+        return response.data.stores;
+    } catch(error) {
+        console.error('Error deleting user:', error);
+        throw new Error(error.response ? error.response.data.message : 'Error fetching reviews');
+    }
+}

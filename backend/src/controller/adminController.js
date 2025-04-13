@@ -256,6 +256,39 @@ const getDashboardStats = async (req, res) => {
 
 };
 
+const getAllRatings = async (req, res) => {
+    try {
+        const stores = await Store.findAll({
+            include: {
+            model: Rating,
+                include: {
+                model: User,
+                    attributes: ['id', 'name', 'email',],
+                }
+            }
+        });
+
+        const formattedData = stores.map(store => ({
+            storeId: store.id,
+            storeName: store.name,
+            storeAddress: store.address,
+            rating: store.Ratings.map(r => ({
+                userId: r.User.id,
+                    name: r.User.name,
+                    email: r.User.email,
+                    rating: r.rating,
+            }))
+        }));
+
+        return res.status(200).json({ stores: formattedData });
+
+    } catch (error) {
+        console.error('Error fetching grouped ratings:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+
+}
+
 module.exports = {
     createStore,
     getAllStores,
@@ -267,5 +300,6 @@ module.exports = {
     getSingleUser,
     updateUser,
     deleteUser,
-    getDashboardStats
+    getDashboardStats,
+    getAllRatings
 };
